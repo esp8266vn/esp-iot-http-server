@@ -288,8 +288,8 @@ void ICACHE_FLASH_ATTR
 user_set_station_config(void)
 {
     // Wifi configuration
-    char ssid[32] = "lau2";
-    char password[64] = "nganta1997";
+    char ssid[32] = "yourssid";
+    char password[64] = "yourpassword";
     struct station_config stationConf;
 
     os_memset(stationConf.ssid, 0, 32);
