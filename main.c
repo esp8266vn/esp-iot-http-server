@@ -3,54 +3,11 @@
 #include "user_interface.h"
 #include "espconn.h"
 #include "mem.h"
-    
+#include "webserver.h"
 LOCAL struct espconn esp_conn;
 LOCAL esp_tcp esptcp;
     
 #define SERVER_LOCAL_PORT         8000
-
-char *index_html =
-"<!DOCTYPE html>\r\n"
-"<html>\r\n"
-"<body>\r\n"
-"\r\n"
-"<h1>ESP8266 HTTP server demo </h1>\r\n"
-"<button type='button' onclick='led_on()'>ON</button><br>\r\n"
-"<br>\r\n"
-"<button type='button' onclick='led_off()'>OFF</button><br>\r\n"
-" \r\n"
-"<script>\r\n"
-
-"function led_on() {\r\n"
-"  var xhttp;\r\n"
-"  if (window.XMLHttpRequest) {\r\n"
-"    // code for modern browsers\r\n"
-"    xhttp = new XMLHttpRequest();\r\n"
-"    } else {\r\n"
-"    // code for IE6, IE5\r\n"
-"    xhttp = new ActiveXObject(\"Microsoft.XMLHTTP\");\r\n"
-"  }\r\n"
-"  xhttp.open(\"GET\", 'led_on', true);\r\n"
-"  xhttp.send();\r\n"
-"}\r\n"
-
-"function led_off() {\r\n"
-"  var xhttp;\r\n"
-"  if (window.XMLHttpRequest) {\r\n"
-"    // code for modern browsers\r\n"
-"    xhttp = new XMLHttpRequest();\r\n"
-"    } else {\r\n"
-"    // code for IE6, IE5\r\n"
-"    xhttp = new ActiveXObject(\"Microsoft.XMLHTTP\");\r\n"
-"  }\r\n"
-"  xhttp.open(\"GET\", 'led_off', true);\r\n"
-"  xhttp.send();\r\n"
-"}\r\n"
-
-"</script>\r\n"
-"\r\n"
-"</body>\r\n"
-"</html>\r\n";
 
 /******************************************************************************
     * FunctionName : led_init
@@ -154,7 +111,7 @@ tcp_server_recv_cb(void *arg, char *pusrdata, unsigned short length)
     ptr[0] = '\0';
     if (os_strcmp(pusrdata, "GET / HTTP/1.1") == 0)
     {
-        http_response(pespconn, 200, index_html);
+        http_response(pespconn, 200, (char *)index_html);
     }
     else if (os_strcmp(pusrdata, "GET /led_on HTTP/1.1") == 0)
     {
@@ -288,8 +245,8 @@ void ICACHE_FLASH_ATTR
 user_set_station_config(void)
 {
     // Wifi configuration
-    char ssid[32] = "yourssid";
-    char password[64] = "yourpassword";
+    char ssid[32] = "lau2";
+    char password[64] = "nganta1997";
     struct station_config stationConf;
 
     os_memset(stationConf.ssid, 0, 32);

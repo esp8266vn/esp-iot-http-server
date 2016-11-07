@@ -3,7 +3,7 @@ XTENSA		?=
 # Mac and linux
 SDK_BASE	?= /tools/esp8266/sdk/ESP8266_NONOS_SDK
 ESPTOOL		?= /tools/esp8266/esptool/esptool.py
-
+SERIAL_PORT ?= /dev/ttyUSB0
 # Windows with unofficial dev kit (default install location is C:/Espressif)
 # SDK_BASE	?= C:/Espressif/ESP8266_SDK
 # ESPTOOL	?= C:/Espressif/utils/ESP8266/esptool.py
@@ -42,11 +42,12 @@ clean:
 	rm -rf *.o *.bin *.a *.out
 
 flash:
-	$(ESPTOOL) --port /dev/tty.SLAB_USBtoUART \
+	$(ESPTOOL) --port $(SERIAL_PORT) \
 			   --baud 480600 \
 			   write_flash --flash_freq 40m --flash_mode dio --flash_size 32m \
 			   0x00000 main0x00000.bin \
 			   0x10000 main0x10000.bin \
 			   0x3fc000 $(SDK_BASE)/bin/esp_init_data_default.bin
-
+html:
+	./xml2c.py -i webserver.html -o webserver.h -n index_html
 .PHONY: all clean
